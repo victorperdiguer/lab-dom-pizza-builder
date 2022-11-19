@@ -81,10 +81,10 @@ function renderWhiteSauce() {
   // Iteration 2: add/remove the class "sauce-white" of `<section class="sauce">`
   let sauce = document.getElementsByClassName("sauce");
   if (state.whiteSauce){
-    sauce[0].classList.remove("sauce-white");
+    sauce[0].classList.add("sauce-white");
   }
   else {
-    sauce[0].classList.add("sauce-white");
+    sauce[0].classList.remove("sauce-white");
   }
 }
 
@@ -102,6 +102,7 @@ function renderGlutenFreeCrust() {
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
   let buttons = document.getElementsByClassName("btn");
+  console.log(buttons);
   //we can do this with a for loop because the order of the buttons is the same order of the properties in the object 'state'
   //not ideal but also more scalable if we keep adding ingredients
   let i = 0;
@@ -119,14 +120,15 @@ function renderButtons() {
 function renderPrice() {
   let list = document.querySelectorAll("aside ul li");
   let i = 0;
-  let result = 10;    //base price is always 10
+  let result = basePrice;
+  //this for loop works because the buttons' order is the same as the order in 'state' and in 'ingredients'
+  //the order of the ingredients in each variable will be the same as the order of the 'list' we obtain by using document.querySelectorAll
   for (let ingredient in state) {
     //stack overflow saves the day - I was using 'visibility' and it was only hiding the price. I needed to 'remove' it.
     if (state[ingredient]) {
       list[i].style.display = '';
-      //we created a 'prices' object earlier with the same keys/properties as 'state'. Each property's value however is the price of the ingredient, not a boolean representing if the ingredient is added or not.
       //let's add each active ingredient's price to the final result
-      result += prices[ingredient];
+      result += ingredients[ingredient].price;
     }
     else {
       list[i].style.display = 'none';
